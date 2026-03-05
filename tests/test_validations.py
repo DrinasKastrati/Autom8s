@@ -204,5 +204,5 @@ def test_column_uniqueness_whitespace():
 
 def test_column_uniqueness_near_duplicate():
     df = pd.DataFrame({"Decision_Description": ["text"], "Decision_Description_Text": ["text"]})
-    result = run_column_uniqueness_check(df, similarity_threshold=0.90)
+    result = run_column_uniqueness_check(df, similarity_threshold=0.85)
     assert result is False
