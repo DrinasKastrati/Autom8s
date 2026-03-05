@@ -1,0 +1,52 @@
+[build-system]
+requires      = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name            = "migration-tools"
+version         = "0.1.0"
+description     = "Data migration validation, reporting, and preflight toolkit."
+readme          = "README.md"
+license         = { text = "MIT" }
+requires-python = ">=3.10"
+
+keywords = [
+    "migration", "data", "validation", "etl", "reporting"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business",
+]
+
+dependencies = [
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "tqdm>=4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "build",
+    "twine",
+]
+
+[project.scripts]
+migration-tools = "migration_tools.cli:main"
+
+[project.urls]
+Homepage   = "https://github.com/yourname/migration-tools"
+Repository = "https://github.com/yourname/migration-tools"
+Issues     = "https://github.com/yourname/migration-tools/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["migration_tools"]
