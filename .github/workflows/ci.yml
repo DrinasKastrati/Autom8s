@@ -33,7 +33,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest tests/ -v --cov=migration_tools --cov-report=term-missing
+          pytest tests/ -v --cov=Autom8s --cov-report=term-missing
 
   # ---------------------------------------------------------------------------
   # Publish to PyPI on a GitHub release
