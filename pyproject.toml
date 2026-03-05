@@ -41,7 +41,7 @@ dev = [
 ]
 
 [project.scripts]
-autom8s = "migration_tools.cli:main"
+autom8s = "Autom8s.cli:main"
 
 [project.urls]
 Homepage   = "https://github.com/DrinasKastrati/Autom8s"
@@ -49,7 +49,7 @@ Repository = "https://github.com/DrinasKastrati/Autom8s"
 Issues     = "https://github.com/DrinasKastrati/Autom8s/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["migration_tools"]
+packages = ["Autom8s"]
 
 [tool.hatch.build.targets.wheel.sources]
 migration_tools = "Autom8s"
