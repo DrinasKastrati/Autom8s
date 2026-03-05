@@ -3,7 +3,7 @@ requires      = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name            = "migration-tools"
+name            = "Autom8s"
 version         = "0.1.0"
 description     = "Data migration validation, reporting, and preflight toolkit."
 readme          = "README.md"
@@ -41,12 +41,15 @@ dev = [
 ]
 
 [project.scripts]
-migration-tools = "migration_tools.cli:main"
+autom8s = "migration_tools.cli:main"
 
 [project.urls]
-Homepage   = "https://github.com/yourname/migration-tools"
-Repository = "https://github.com/yourname/migration-tools"
-Issues     = "https://github.com/yourname/migration-tools/issues"
+Homepage   = "https://github.com/DrinasKastrati/Autom8s"
+Repository = "https://github.com/DrinasKastrati/Autom8s"
+Issues     = "https://github.com/DrinasKastrati/Autom8s/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["migration_tools"]
+
+[tool.hatch.build.targets.wheel.sources]
+migration_tools = "Autom8s"
