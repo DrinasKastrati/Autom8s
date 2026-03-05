@@ -521,7 +521,7 @@ def run_date_correlation_check(
 # Column uniqueness check (post-loop)
 # ---------------------------------------------------------------------------
 
-_SIMILARITY_THRESHOLD = 0.90  # 0.0 - 1.0: raise to be stricter, lower to catch more
+_SIMILARITY_THRESHOLD = 0.85  # 0.0 - 1.0: raise to be stricter, lower to catch more
 
 def run_column_uniqueness_check(
     df: pd.DataFrame,
