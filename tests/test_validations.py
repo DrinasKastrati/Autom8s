@@ -187,7 +187,7 @@ def test_run_date_correlation_empty():
 
 
 # ---------------------------------------------------------------------------
-# run_column_uniqueness_check
+# run_column_uniqueness_check_
 # ---------------------------------------------------------------------------
 
 def test_column_uniqueness_clean():
