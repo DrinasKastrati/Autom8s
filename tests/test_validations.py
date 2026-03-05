@@ -197,12 +197,12 @@ def test_column_uniqueness_clean():
 
 
 def test_column_uniqueness_whitespace():
-    df = pd.DataFrame(columns=["Person_ID ", "Decision_FromDate"])
+    df = pd.DataFrame({"Person_ID ": ["123"], "Decision_FromDate": ["01.01.2023"]})
     result = run_column_uniqueness_check(df, similarity_threshold=0.90)
     assert result is False
 
 
 def test_column_uniqueness_near_duplicate():
-    df = pd.DataFrame(columns=["Decision_Description", "Decision_Description_Text"])
+    df = pd.DataFrame({"Decision_Description": ["text"], "Decision_Description_Text": ["text"]})
     result = run_column_uniqueness_check(df, similarity_threshold=0.90)
     assert result is False

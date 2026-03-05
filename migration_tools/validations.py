@@ -546,9 +546,9 @@ def run_column_uniqueness_check(
         run_column_uniqueness_check(data, label="source dataset", logger=logger)
         run_column_uniqueness_check(output_success, label="output", logger=logger)
     """
-    if df.empty:
+    if len(df.columns) == 0:
         if logger:
-            logger.info(f"Column uniqueness check skipped -- {label} is empty.")
+            logger.info(f"Column uniqueness check skipped -- {label} has no columns.")
         return True
 
     log  = logger.info    if logger else print
