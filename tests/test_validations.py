@@ -6,7 +6,7 @@ Unit tests for migration_tools.validations
 
 import pytest
 import pandas as pd
-from migration_tools import (
+from Autom8s import (
     validate_date_formats,
     check_required_columns,
     check_mapping_coverage,
