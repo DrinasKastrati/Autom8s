@@ -34,7 +34,7 @@ output_success, output_failed = init_outputs(migration)
 run_preflight_checks(
     data,
     migration,
-    date_columns=["PaatosPaiva", "VoimassaolonAlkamisPaiva"],
+    date_columns=["Datevalue", "Datevalue"],
     date_format="%d.%m.%Y",
     logger=logger,
 )
