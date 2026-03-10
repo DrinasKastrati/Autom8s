@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name            = "Autom8s"
-version         = "0.1.2"
+version         = "0.1.3"
 description     = "Data migration validation, reporting, and preflight toolkit."
 readme          = "README.md"
 license         = { text = "MIT" }
