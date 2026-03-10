@@ -446,6 +446,7 @@ def check_output_date_formats(
 
 _CORRELATION_COLS = ["Person_ID", "Actualization_Date", "Decision_FromDate", "Decision_ToDate"]
 
+
 def run_date_correlation_check(
     output_success: pd.DataFrame,
     logger: logging.Logger = None,
@@ -476,20 +477,30 @@ def run_date_correlation_check(
     try:
         compare_df = output_success[_CORRELATION_COLS].copy()
 
-        compare_df["Actualization_Date"] = compare_df["Actualization_Date"].fillna("").astype(str)
-        compare_df["Decision_FromDate"]  = compare_df["Decision_FromDate"].fillna("").astype(str)
-        compare_df["Decision_ToDate"]    = compare_df["Decision_ToDate"].fillna("").astype(str)
+        compare_df["Actualization_Date"] = compare_df["Actualization_Date"].fillna("").astype(str).str.strip()
+        compare_df["Decision_FromDate"]  = compare_df["Decision_FromDate"].fillna("").astype(str).str.strip()
+        compare_df["Decision_ToDate"]    = compare_df["Decision_ToDate"].fillna("").astype(str).str.strip()
 
-        # Actualization_Date vs Decision_FromDate
+        # Actualization_Date vs Decision_FromDate (string comparison is fine — same format both sides)
         act_from_match_mask = compare_df["Actualization_Date"] == compare_df["Decision_FromDate"]
         act_from_matches    = int(act_from_match_mask.sum())
         act_from_mismatches = len(compare_df) - act_from_matches
 
         # Decision_FromDate vs Decision_ToDate
-        from_to_match_mask = compare_df["Decision_FromDate"] <= compare_df["Decision_ToDate"]
-        # Exclude rows where ToDate is empty (no end date is valid)
-        has_to_date        = compare_df["Decision_ToDate"] != ""
-        invalid_range_mask = has_to_date & ~from_to_match_mask
+        # Parse both as proper dates (DD.MM.YYYY) before comparing to avoid
+        # incorrect alphabetical string comparison (e.g. "31.01.2024" > "01.02.2024" as text).
+        def _parse_date(s: str):
+            try:
+                return datetime.strptime(s, "%d.%m.%Y")
+            except ValueError:
+                return None
+
+        has_to_date  = compare_df["Decision_ToDate"] != ""
+        from_parsed  = compare_df["Decision_FromDate"].apply(_parse_date)
+        to_parsed    = compare_df["Decision_ToDate"].apply(_parse_date)
+
+        both_valid         = from_parsed.notna() & to_parsed.notna() & has_to_date
+        invalid_range_mask = both_valid & (from_parsed > to_parsed)
         invalid_range_count = int(invalid_range_mask.sum())
 
         total_rows = len(compare_df)
