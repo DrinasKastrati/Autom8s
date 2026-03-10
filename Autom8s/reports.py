@@ -53,7 +53,7 @@ def generate_html_report(
     os.makedirs(out_dir, exist_ok=True)
     conversion_rate = f"{success_count / total_rows * 100:.1f}%" if total_rows else "N/A"
 
-    # --- Failed rows table ---
+    # --- Not converted rows table ---
     if not output_failed.empty:
         failed_html = output_failed.to_html(
             index=False,
@@ -62,7 +62,7 @@ def generate_html_report(
             na_rep="",
         )
     else:
-        failed_html = "<p class='ok'>✓ No failed rows.</p>"
+        failed_html = "<p class='ok'>✓ No unconverted rows.</p>"
 
     # --- Sample success rows (first 10) ---
     if not output_success.empty:
@@ -125,7 +125,7 @@ def generate_html_report(
     <div class="cards">
         <div class="card"><div class="value">{total_rows}</div><div class="label">Total input rows</div></div>
         <div class="card"><div class="value" style="color:#2ecc71">{success_count}</div><div class="label">Successfully converted</div></div>
-        <div class="card"><div class="value" style="color:{'#e74c3c' if failed_count > 0 else '#2ecc71'}">{failed_count}</div><div class="label">Failed rows</div></div>
+        <div class="card"><div class="value" style="color:{'#e74c3c' if failed_count > 0 else '#2ecc71'}">{failed_count}</div><div class="label">Not converted rows</div></div>
         <div class="card"><div class="value">{conversion_rate}</div><div class="label">Conversion rate</div></div>
         <div class="card"><div class="value">{execution_time:.1f}s</div><div class="label">Execution time</div></div>
     </div>
@@ -133,7 +133,7 @@ def generate_html_report(
     <h2>Failure Breakdown</h2>
     {reason_html}
 
-    <h2>Failed Rows</h2>
+    <h2>Not converted rows</h2>
     {failed_html}
 
     <h2>Sample Output (first 10 rows)</h2>
@@ -171,7 +171,7 @@ def generate_excel_report(
     """
     Generate an Excel validation report with separate sheets for:
       - Summary
-      - Failed rows
+      - Not converted rows
       - Sample output (first 50 rows)
       - Error breakdown
 
@@ -201,18 +201,18 @@ def generate_excel_report(
             {"Metric": "Generated",          "Value": _now()},
             {"Metric": "Total input rows",   "Value": total_rows},
             {"Metric": "Successfully mapped","Value": success_count},
-            {"Metric": "Failed rows",        "Value": failed_count},
+            {"Metric": "Not converted rows",        "Value": failed_count},
             {"Metric": "Conversion rate",    "Value": conversion_rate},
             {"Metric": "Execution time (s)", "Value": f"{execution_time:.2f}"},
         ])
         summary_df.to_excel(writer, sheet_name="Summary", index=False)
 
-        # --- Failed rows sheet ---
+        # --- Not converted rows sheet ---
         if not output_failed.empty:
-            output_failed.to_excel(writer, sheet_name="Failed Rows", index=False)
+            output_failed.to_excel(writer, sheet_name="Not converted rows", index=False)
         else:
-            pd.DataFrame([{"Info": "No failed rows."}]).to_excel(
-                writer, sheet_name="Failed Rows", index=False
+            pd.DataFrame([{"Info": "No unconverted rows."}]).to_excel(
+                writer, sheet_name="Not converted rows", index=False
             )
 
         # --- Error breakdown sheet ---
